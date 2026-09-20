@@ -1,0 +1,109 @@
+@import './tokens.css';
+
+/* Official Google Fonts Manrope v20, Latin variable subset.
+   Source: https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2
+   License: /fonts/OFL-Manrope.txt (SIL Open Font License 1.1). */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/manrope-latin-variable.woff2') format('woff2');
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0 var(--space-4);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+img,
+video {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.container,
+.container-reading {
+  inline-size: calc(100% - 2 * var(--page-gutter));
+  margin-inline: auto;
+}
+
+.container {
+  max-inline-size: var(--content-width-main);
+}
+
+.container-reading {
+  max-inline-size: var(--content-width-reading);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a {
+    transition: color var(--duration-fast) ease;
+  }
+}
