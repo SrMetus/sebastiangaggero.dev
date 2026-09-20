@@ -1,0 +1,251 @@
+<section class="featured-system" aria-labelledby="job-radar-title">
+  <header class="system-introduction">
+    <div>
+      <p class="section-label">01 / FEATURED SYSTEM</p>
+      <h2 id="job-radar-title">Job Radar</h2>
+    </div>
+    <div class="system-summary">
+      <p class="system-problem">
+        External job offers need a consistent structure before they can be compared, filtered and
+        ranked.
+      </p>
+      <p>
+        Job Radar collects external job offers, normalizes their data and removes duplicates by URL.
+        The application exposes structured results through a FastAPI REST API with filtering and
+        pagination, while deterministic scoring rules keep ranking behavior predictable.
+      </p>
+    </div>
+  </header>
+
+  <div class="system-explanation">
+    <figure class="system-overview">
+      <figcaption>
+        <span class="section-label">SYSTEM OVERVIEW</span>
+        <span class="overview-caption">Logical responsibilities, not execution order.</span>
+      </figcaption>
+      <p class="system-input">External offers</p>
+      <dl class="system-stages">
+        <div class="system-stage">
+          <dt>Prepare</dt>
+          <dd>ingestion</dd>
+          <dd>normalization</dd>
+          <dd>URL deduplication</dd>
+        </div>
+        <div class="system-stage">
+          <dt>Persist</dt>
+          <dd>PostgreSQL</dd>
+        </div>
+        <div class="system-stage">
+          <dt>Serve</dt>
+          <dd>REST API</dd>
+          <dd>filtering</dd>
+          <dd>pagination</dd>
+          <dd>deterministic scoring</dd>
+          <dd>frontend</dd>
+        </div>
+      </dl>
+    </figure>
+
+    <dl class="system-notes">
+      <div>
+        <dt>URL IDENTITY</dt>
+        <dd>Duplicate offers are identified through their source URL.</dd>
+      </div>
+      <div>
+        <dt>DETERMINISTIC SCORING</dt>
+        <dd>Defined scoring rules keep ranking behavior predictable and repeatable.</dd>
+      </div>
+      <div>
+        <dt>ENGINEERING EVIDENCE</dt>
+        <dd>OpenAPI documentation · pytest · GitHub Actions</dd>
+      </div>
+    </dl>
+  </div>
+
+  <footer class="system-footer">
+    <dl class="system-metadata">
+      <div>
+        <dt>APPLICATION</dt>
+        <dd>Python 3.12 · FastAPI</dd>
+      </div>
+      <div>
+        <dt>DATA</dt>
+        <dd>PostgreSQL · SQLAlchemy · Alembic</dd>
+      </div>
+      <div>
+        <dt>DELIVERY</dt>
+        <dd>Docker</dd>
+      </div>
+    </dl>
+    <a href="https://job-radar-bonw.onrender.com/" target="_blank" rel="noopener noreferrer">
+      Open live project →
+    </a>
+  </footer>
+</section>
+
+<style>
+  .featured-system {
+    padding-block: var(--space-12) var(--space-16);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .system-introduction,
+  .system-explanation {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .section-label,
+  .system-notes dt,
+  .system-metadata dt {
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+  }
+
+  .section-label {
+    display: block;
+    margin-block-end: var(--space-3);
+  }
+
+  h2 {
+    margin: 0;
+    letter-spacing: -0.025em;
+  }
+
+  .system-summary {
+    max-inline-size: 60ch;
+  }
+
+  .system-summary p:last-child {
+    margin: 0;
+  }
+
+  .system-problem {
+    font-size: var(--font-size-body-large);
+    margin-block-end: var(--space-6);
+  }
+
+  .system-explanation {
+    margin-block: var(--space-12);
+  }
+
+  figure,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  .overview-caption {
+    display: block;
+    font-size: var(--font-size-small);
+  }
+
+  .system-input {
+    margin-block: var(--space-6) var(--space-4);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .system-stages {
+    display: grid;
+    gap: var(--space-8);
+    padding-inline-start: var(--space-4);
+    border-inline-start: 1px solid var(--color-border);
+  }
+
+  .system-stage dt {
+    margin-block-end: var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .system-stage dd + dd {
+    margin-block-start: var(--space-1);
+  }
+
+  .system-notes {
+    display: grid;
+    align-content: start;
+    gap: var(--space-6);
+    padding-block-start: var(--space-6);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .system-notes dt,
+  .system-metadata dt {
+    margin-block-end: var(--space-2);
+  }
+
+  .system-notes dd {
+    max-inline-size: 40ch;
+  }
+
+  .system-footer {
+    display: grid;
+    gap: var(--space-8);
+    padding-block-start: var(--space-6);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .system-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6) var(--space-8);
+  }
+
+  .system-footer a {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 3rem;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  @media (min-width: 48rem) {
+    .featured-system {
+      padding-block: var(--space-16) var(--space-24);
+    }
+
+    .system-introduction {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      gap: var(--space-12);
+    }
+
+    .system-explanation {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-12);
+      margin-block: var(--space-16);
+    }
+
+    .system-notes {
+      padding-block-start: 0;
+      padding-inline-start: var(--space-6);
+      border-block-start: 0;
+      border-inline-start: 1px solid var(--color-border);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .system-explanation {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: var(--space-16);
+    }
+
+    .system-stages {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr);
+      gap: var(--space-6);
+      padding-inline-start: 0;
+      padding-block-start: var(--space-4);
+      border-inline-start: 0;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .system-footer {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: var(--space-12);
+    }
+  }
+</style>
