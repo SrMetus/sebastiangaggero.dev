@@ -1,0 +1,162 @@
+<section class="services" aria-labelledby="services-heading">
+  <header class="services-introduction">
+    <h2 id="services-heading">03 / SERVICES</h2>
+    <p>
+      I build backend systems and automation for workflows that need reliable logic, data handling
+      or integration between services.
+    </p>
+  </header>
+
+  <div class="service-row">
+    <h3>Backend &amp; APIs</h3>
+    <dl>
+      <div>
+        <dt>THE NEED</dt>
+        <dd>
+          An application needs a backend to validate requests, apply business rules and store data.
+        </dd>
+      </div>
+      <div>
+        <dt>WHAT I CAN BUILD</dt>
+        <dd>Python and FastAPI services with REST endpoints and PostgreSQL persistence.</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="service-row">
+    <h3>Automation</h3>
+    <dl>
+      <div>
+        <dt>THE NEED</dt>
+        <dd>
+          Files need processing, data needs cleaning, or the same workflow keeps being repeated
+          manually.
+        </dd>
+      </div>
+      <div>
+        <dt>WHAT I CAN BUILD</dt>
+        <dd>
+          Python automation for repeatable workflows, including scripts, browser automation and data
+          processing when appropriate.
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="service-row">
+    <h3>API Integrations</h3>
+    <dl>
+      <div>
+        <dt>THE NEED</dt>
+        <dd>Information needs to move between services with different APIs and data formats.</dd>
+      </div>
+      <div>
+        <dt>WHAT I CAN BUILD</dt>
+        <dd>
+          Python integrations that fetch, transform and send data, with explicit handling of API
+          failures.
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="service-row">
+    <h3>Internal Tools</h3>
+    <dl>
+      <div>
+        <dt>THE NEED</dt>
+        <dd>A team needs a focused tool for a specific operational process.</dd>
+      </div>
+      <div>
+        <dt>WHAT I CAN BUILD</dt>
+        <dd>
+          Small internal applications built around that workflow, with the necessary data handling
+          and business logic kept in one place.
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: var(--space-12) var(--space-16);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .services-introduction,
+  .service-row,
+  dl {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .services-introduction {
+    margin-block-end: var(--space-6);
+  }
+
+  h2,
+  dt {
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+    letter-spacing: 0.04em;
+  }
+
+  h2,
+  h3,
+  p,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  .services-introduction p {
+    max-inline-size: 60ch;
+    font-size: var(--font-size-body-large);
+  }
+
+  .service-row {
+    padding-block: var(--space-6);
+  }
+
+  .service-row + .service-row {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  h3 {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+  }
+
+  dt {
+    margin-block-end: var(--space-1);
+  }
+
+  dd {
+    max-inline-size: 55ch;
+  }
+
+  @media (min-width: 48rem) {
+    .services-introduction,
+    .service-row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      column-gap: var(--space-12);
+      align-items: start;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .services-introduction,
+    .service-row {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    }
+
+    dl {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+      column-gap: var(--space-12);
+    }
+  }
+</style>
