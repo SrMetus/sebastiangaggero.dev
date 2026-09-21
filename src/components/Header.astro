@@ -3,6 +3,22 @@
     <a class="brand" href="/">
       Sebastian Gaggero
     </a>
+    <nav aria-label="Primary">
+      <ul role="list">
+        <li>
+          <a href="#work">Work</a>
+        </li>
+        <li>
+          <a href="#services">Services</a>
+        </li>
+        <li>
+          <a href="#about">About</a>
+        </li>
+        <li>
+          <a href="#contact">Contact</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </header>
 
@@ -14,7 +30,11 @@
   }
 
   .header-inner {
-    padding-block: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding-block: var(--space-3);
   }
 
   .brand {
@@ -32,9 +52,51 @@
     text-decoration: underline;
   }
 
+  nav {
+    max-inline-size: 100%;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    color: var(--color-text);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-regular);
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
   @media (min-width: 48rem) {
     .header-inner {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      row-gap: var(--space-1);
+      column-gap: var(--space-6);
       padding-block: var(--space-6);
+    }
+
+    ul {
+      column-gap: var(--space-6);
+    }
+
+    nav a {
+      font-size: var(--font-size-body);
     }
   }
 </style>
