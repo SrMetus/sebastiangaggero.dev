@@ -1,0 +1,100 @@
+<section class="how-i-work" aria-labelledby="how-i-work-heading">
+  <h2 id="how-i-work-heading">06 / HOW I WORK</h2>
+
+  <ol class="process-index" role="list">
+    <li>
+      <h3>Understand</h3>
+      <p>Clarify the problem, constraints and expected behavior before choosing a solution.</p>
+    </li>
+    <li>
+      <h3>Scope</h3>
+      <p>Define what needs to be built now and what stays outside the current solution.</p>
+    </li>
+    <li>
+      <h3>Build</h3>
+      <p>
+        Keep the implementation straightforward and use technology only when it serves a specific
+        need.
+      </p>
+    </li>
+    <li>
+      <h3>Verify</h3>
+      <p>
+        Check the behavior most likely to fail and review the result against the expected behavior
+        before considering the work complete.
+      </p>
+    </li>
+    <li>
+      <h3>Deliver</h3>
+      <p>
+        Leave the solution understandable, document what is useful, and make relevant limitations or
+        next steps explicit.
+      </p>
+    </li>
+  </ol>
+</section>
+
+<style>
+  .how-i-work {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-12) var(--space-16);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  h2,
+  h3,
+  p,
+  ol {
+    margin: 0;
+  }
+
+  h2 {
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+    letter-spacing: 0.04em;
+  }
+
+  .process-index {
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-4);
+  }
+
+  li:first-child {
+    padding-block-start: 0;
+  }
+
+  li:last-child {
+    padding-block-end: 0;
+  }
+
+  li + li {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  h3 {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+  }
+
+  p {
+    max-inline-size: 55ch;
+  }
+
+  @media (min-width: 48rem) {
+    li {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      column-gap: var(--space-8);
+      align-items: start;
+    }
+  }
+</style>
