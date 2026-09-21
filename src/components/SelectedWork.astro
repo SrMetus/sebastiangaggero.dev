@@ -1,0 +1,235 @@
+<section class="selected-work" aria-labelledby="selected-work-heading">
+  <h2 id="selected-work-heading" class="section-label">
+    02 / SELECTED WORK
+  </h2>
+  <article class="project" aria-labelledby="surtr-title">
+    <header class="project-identity">
+      <h3 id="surtr-title">Surtr Alert</h3>
+      <p>Python notification plugin for WeeChat on Linux</p>
+    </header>
+
+    <div class="project-narrative">
+      <p class="project-problem">
+        Relevant IRC activity can be easy to miss when attention is elsewhere.
+      </p>
+      <p>
+        Surtr Alert adds local notifications for channel mentions, private messages and IRC notices,
+        with optional alerts when configured friends join or leave.
+      </p>
+      <p>
+        Python callbacks respond to WeeChat signal hooks, while settings stay in WeeChat’s native
+        plugin configuration. No external web service is required.
+      </p>
+    </div>
+
+    <figure class="notification-path">
+      <figcaption>
+        <span class="section-label">FROM IRC ACTIVITY TO A LOCAL ALERT</span>
+        <span class="path-caption">
+          Conceptual inputs and outputs, not execution or fallback order.
+        </span>
+      </figcaption>
+      <div class="path-details">
+        <div class="path-side">
+          <h4>WeeChat events</h4>
+          <ul>
+            <li>channel mentions</li>
+            <li>private messages</li>
+            <li>IRC notices</li>
+            <li>configured friend activity</li>
+          </ul>
+        </div>
+        <div class="path-boundary">
+          <p>Python signal hooks</p>
+          <p>Available controls: monitored-channel filters and ignored nicks.</p>
+        </div>
+        <div class="path-side">
+          <h4>Local notification</h4>
+          <ul>
+            <li>notify-send</li>
+            <li>terminal</li>
+            <li>Zenity</li>
+            <li>local log</li>
+          </ul>
+        </div>
+      </div>
+      <p class="configuration-note">Settings stored in WeeChat.</p>
+    </figure>
+
+    <a
+      class="repository-link"
+      href="https://github.com/SrMetus/surtr-alert"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View repository →
+    </a>
+  </article>
+</section>
+
+<style>
+  .selected-work {
+    padding-block: var(--space-12) var(--space-16);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .section-label {
+    display: block;
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+    letter-spacing: 0.04em;
+  }
+
+  h2 {
+    margin-block-end: var(--space-8);
+  }
+
+  .project {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .project > * {
+    min-inline-size: 0;
+  }
+
+  h3 {
+    margin-block-end: var(--space-2);
+    letter-spacing: -0.025em;
+  }
+
+  .project-identity p,
+  .project-narrative p:last-child {
+    margin: 0;
+  }
+
+  .project-identity p {
+    max-inline-size: 30ch;
+  }
+
+  .project-narrative {
+    max-inline-size: 55ch;
+  }
+
+  .project-problem {
+    font-size: var(--font-size-body-large);
+  }
+
+  .notification-path {
+    margin: 0;
+    padding-block-start: var(--space-6);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .path-caption {
+    display: block;
+    margin-block-start: var(--space-2);
+    font-size: var(--font-size-small);
+  }
+
+  .path-details {
+    display: grid;
+    gap: var(--space-6);
+    margin-block: var(--space-6);
+  }
+
+  h4 {
+    margin-block-end: var(--space-2);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  ul {
+    margin: 0;
+    padding-inline-start: var(--space-4);
+  }
+
+  li::marker {
+    color: var(--color-primary);
+  }
+
+  .path-boundary {
+    padding-inline-start: var(--space-4);
+    border-inline-start: 1px solid var(--color-border);
+  }
+
+  .path-boundary p:first-child {
+    margin-block-end: var(--space-2);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .path-boundary p:last-child,
+  .configuration-note {
+    margin: 0;
+  }
+
+  .repository-link {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 3rem;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  @media (min-width: 48rem) {
+    .selected-work {
+      padding-block: var(--space-12) var(--space-16);
+    }
+
+    .project {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      column-gap: var(--space-12);
+      row-gap: var(--space-8);
+    }
+
+    .notification-path,
+    .repository-link {
+      grid-column: 2;
+    }
+
+    .path-details {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .path-boundary {
+      grid-column: 1 / -1;
+    }
+
+    .path-side:last-child {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .project {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      column-gap: var(--space-16);
+      row-gap: var(--space-6);
+    }
+
+    .project-identity {
+      grid-column: 1 / -1;
+    }
+
+    .project-narrative {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .notification-path {
+      grid-column: 2;
+      grid-row: 2;
+      padding-block-start: 0;
+      border-block-start: 0;
+    }
+
+    .repository-link {
+      grid-column: 1;
+    }
+  }
+</style>
