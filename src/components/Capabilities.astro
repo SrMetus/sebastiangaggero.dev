@@ -1,0 +1,114 @@
+<section class="capabilities" aria-labelledby="capabilities-heading">
+  <header class="capabilities-introduction">
+    <h2 id="capabilities-heading">04 / CAPABILITIES</h2>
+    <p>
+      A compact view of the tools and technical areas I use across backend development, automation
+      and integrations.
+    </p>
+  </header>
+
+  <dl class="capability-index">
+    <div class="capability-row">
+      <dt>Backend</dt>
+      <dd>
+        <p>Python · FastAPI · REST APIs</p>
+        <p>PostgreSQL · SQLAlchemy · Alembic</p>
+      </dd>
+    </div>
+    <div class="capability-row">
+      <dt>Automation</dt>
+      <dd>
+        <p>Python scripting · Playwright</p>
+        <p>Data processing · browser workflows</p>
+      </dd>
+    </div>
+    <div class="capability-row">
+      <dt>Engineering Workflow</dt>
+      <dd>
+        <p>Git · GitHub · Linux · Docker</p>
+        <p>pytest · GitHub Actions</p>
+      </dd>
+    </div>
+    <div class="capability-row">
+      <dt>Integrations</dt>
+      <dd>
+        <p>External APIs · JSON · authentication</p>
+        <p>Service-to-service data flows</p>
+      </dd>
+    </div>
+  </dl>
+</section>
+
+<style>
+  .capabilities {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-12) var(--space-16);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  h2,
+  p,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  h2 {
+    margin-block-end: var(--space-4);
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+    letter-spacing: 0.04em;
+  }
+
+  .capabilities-introduction p {
+    max-inline-size: 60ch;
+    font-size: var(--font-size-body-large);
+  }
+
+  .capability-row {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-4);
+  }
+
+  .capability-row:first-child {
+    padding-block-start: 0;
+  }
+
+  .capability-row:last-child {
+    padding-block-end: 0;
+  }
+
+  .capability-row + .capability-row {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  dt {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+  }
+
+  dd p + p {
+    margin-block-start: var(--space-1);
+  }
+
+  @media (min-width: 48rem) {
+    .capability-row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      column-gap: var(--space-8);
+      align-items: start;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .capabilities {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      column-gap: var(--space-12);
+      align-items: start;
+    }
+  }
+</style>
