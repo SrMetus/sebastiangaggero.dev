@@ -1,0 +1,108 @@
+<section class="about" aria-labelledby="about-heading">
+  <h2 id="about-heading">05 / ABOUT</h2>
+
+  <div class="about-content">
+    <div class="profile-facts">
+      <div>
+        <h3>Background</h3>
+        <ul class="background">
+          <li lang="es">Ingeniería en Conectividad y Redes — DuocUC</li>
+          <li lang="es">Programador Full Stack — 4Geeks Academy</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Current focus</h3>
+        <p>My current focus is Python backend development, REST APIs and automation.</p>
+      </div>
+    </div>
+
+    <div class="engineering-approach">
+      <h3>Engineering approach</h3>
+      <p>
+        I start by understanding the problem and its constraints. I favor straightforward
+        implementations and choose technologies for a specific need. I automate repetitive work and
+        test the parts most likely to fail.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: var(--space-12) var(--space-16);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  h2,
+  h3,
+  p,
+  ul {
+    margin: 0;
+  }
+
+  h2 {
+    margin-block-end: var(--space-8);
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+    letter-spacing: 0.04em;
+  }
+
+  h3 {
+    margin-block-end: var(--space-2);
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+  }
+
+  .about-content,
+  .profile-facts {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .background {
+    padding: 0;
+    list-style: none;
+  }
+
+  .background li + li {
+    margin-block-start: var(--space-2);
+  }
+
+  p {
+    max-inline-size: 55ch;
+  }
+
+  .engineering-approach {
+    padding-block-start: var(--space-6);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 48rem) {
+    .profile-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-8);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .about-content {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      column-gap: var(--space-12);
+      align-items: start;
+    }
+
+    .profile-facts {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .engineering-approach {
+      padding-block-start: 0;
+      padding-inline-start: var(--space-12);
+      border-block-start: 0;
+      border-inline-start: 1px solid var(--color-border);
+    }
+  }
+</style>
