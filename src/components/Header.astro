@@ -19,6 +19,9 @@
         </li>
       </ul>
     </nav>
+    <a class="cv-link" href="/sebastian-gaggero-cv-en.pdf" download>
+      Download CV
+    </a>
   </div>
 </header>
 
@@ -30,10 +33,10 @@
   }
 
   .header-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--space-2);
     padding-block: var(--space-3);
   }
 
@@ -53,7 +56,27 @@
   }
 
   nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
     max-inline-size: 100%;
+  }
+
+  .cv-link {
+    grid-column: 2;
+    grid-row: 1;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    color: var(--color-text);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-regular);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    white-space: nowrap;
+  }
+
+  .cv-link:hover {
+    color: var(--color-primary);
   }
 
   ul {
@@ -82,10 +105,6 @@
 
   @media (min-width: 48rem) {
     .header-inner {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
       row-gap: var(--space-1);
       column-gap: var(--space-6);
       padding-block: var(--space-6);
@@ -97,6 +116,21 @@
 
     nav a {
       font-size: var(--font-size-body);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .header-inner {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+
+    nav {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .cv-link {
+      grid-column: 3;
     }
   }
 </style>
