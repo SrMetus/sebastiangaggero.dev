@@ -1,0 +1,358 @@
+---
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'es' } }];
+}
+
+const content = {
+  en: {
+    profileLabel: 'Profile',
+    profile:
+      'Python backend developer focused on REST APIs, automation, integrations and data-driven applications. I build practical systems with FastAPI, PostgreSQL and Python, with attention to clear business logic, maintainable code and automated testing.',
+    projectsLabel: 'Selected Projects',
+    caseStudyLabel: 'Case study',
+    liveLabel: 'Live project',
+    jobRadarBullets: [
+      'Built a FastAPI REST API with PostgreSQL persistence via SQLAlchemy and Alembic migrations.',
+      'Imported Remotive JSON and Python.org HTML with source-specific normalization and exact URL deduplication backed by a database unique constraint.',
+      'Implemented a transparent rule-based scoring system to prioritize junior remote Python/backend roles.',
+      'Tested imports, duplicate handling and API behavior with pytest; configured GitHub Actions for tests and Docker Compose for local development.',
+    ],
+    repositoryLabel: 'Repository',
+    surtrBullets: [
+      'Handled mentions and private messages through WeeChat signal hooks and Python callbacks.',
+      'Integrated local Linux notifications via notify-send, terminal output, Zenity and logging.',
+      'Added channel and ignored-nick filters through native WeeChat configuration; no external web service required.',
+    ],
+    skillsLabel: 'Technical Skills',
+    automationLabel: 'Automation & Integrations',
+    automation:
+      'Python scripting · Playwright · web scraping · API integrations · JSON · authentication · data processing',
+    toolsLabel: 'Engineering Tools',
+    educationLabel: 'Education',
+    duocStatus: 'Completed',
+    academyStatus: 'Completed · Certificate awarded',
+  },
+  es: {
+    profileLabel: 'Perfil',
+    profile:
+      'Desarrollador backend Python enfocado en APIs REST, automatización, integraciones y aplicaciones basadas en datos. Desarrollo sistemas prácticos con FastAPI, PostgreSQL y Python, priorizando lógica clara, código mantenible y pruebas automatizadas.',
+    projectsLabel: 'Proyectos destacados',
+    caseStudyLabel: 'Caso de estudio',
+    liveLabel: 'Proyecto en línea',
+    jobRadarBullets: [
+      'Desarrollé una API REST con FastAPI, persistencia en PostgreSQL mediante SQLAlchemy y migraciones con Alembic.',
+      'Importé JSON de Remotive y HTML de Python.org con normalización por fuente y deduplicación por URL exacta, respaldada por una restricción de unicidad.',
+      'Implementé un sistema de scoring basado en reglas explícitas para priorizar ofertas junior remotas de Python/backend.',
+      'Probé importaciones, duplicados y comportamiento de la API con pytest; configuré GitHub Actions para las pruebas y Docker Compose para desarrollo local.',
+    ],
+    repositoryLabel: 'Repositorio',
+    surtrBullets: [
+      'Gestioné menciones y mensajes privados con hooks de señales de WeeChat y callbacks en Python.',
+      'Integré notificaciones locales en Linux con notify-send, terminal, Zenity y registros de actividad.',
+      'Añadí filtros de canales y nicks ignorados en la configuración nativa de WeeChat, sin servicios web externos.',
+    ],
+    skillsLabel: 'Habilidades técnicas',
+    automationLabel: 'Automatización e integraciones',
+    automation:
+      'scripting en Python · Playwright · web scraping · integración de APIs · JSON · autenticación · procesamiento de datos',
+    toolsLabel: 'Herramientas',
+    educationLabel: 'Formación',
+    duocStatus: 'Titulado',
+    academyStatus: 'Completado · Certificado obtenido',
+  },
+};
+
+const lang = Astro.params.lang === 'es' ? 'es' : 'en';
+const copy = content[lang];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="robots" content="noindex" />
+    <meta name="author" content="Sebastian Gaggero" />
+    <title>Sebastian Gaggero — CV ({lang.toUpperCase()})</title>
+  </head>
+  <body>
+    <main>
+      <header class="identity">
+        <h1>Sebastian Gaggero</h1>
+        <p class="role">Python Backend Developer</p>
+        <p class="focus">FastAPI · REST APIs · Automation</p>
+        <p class="contact">
+          <a href="mailto:s.gaggero87@gmail.com">s.gaggero87@gmail.com</a>
+          <span aria-hidden="true"> · </span>
+          <a href="https://sebastiangaggero.dev">sebastiangaggero.dev</a>
+          <span aria-hidden="true"> · </span>
+          <a href="https://github.com/SrMetus">GitHub</a>
+          <span aria-hidden="true"> · </span>
+          <a href="https://www.linkedin.com/in/sebastiangaggero/">LinkedIn</a>
+        </p>
+      </header>
+
+      <section class="profile" aria-labelledby="profile-title">
+        <h2 id="profile-title">{copy.profileLabel}</h2>
+        <p>{copy.profile}</p>
+      </section>
+
+      <section class="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title">{copy.projectsLabel}</h2>
+        <article aria-labelledby="job-radar-title">
+          <h3 id="job-radar-title">Job Radar</h3>
+          <p class="technology">FastAPI · PostgreSQL · SQLAlchemy · Docker</p>
+          <ul>
+            {copy.jobRadarBullets.map((bullet) => (
+              <li>{bullet}</li>
+            ))}
+          </ul>
+          <p class="project-links">
+            <a href="https://sebastiangaggero.dev/projects/job-radar">{copy.caseStudyLabel}</a>
+            <span aria-hidden="true"> · </span>
+            <a href="https://job-radar-bonw.onrender.com/">{copy.liveLabel}</a>
+          </p>
+        </article>
+        <article aria-labelledby="surtr-title">
+          <h3 id="surtr-title">Surtr Alert</h3>
+          <p class="technology">Python · WeeChat · Linux</p>
+          <ul>
+            {copy.surtrBullets.map((bullet) => (
+              <li>{bullet}</li>
+            ))}
+          </ul>
+          <p class="project-links">
+            <a href="https://github.com/SrMetus/surtr-alert">{copy.repositoryLabel}</a>
+          </p>
+        </article>
+      </section>
+
+      <section class="skills" aria-labelledby="skills-title">
+        <h2 id="skills-title">{copy.skillsLabel}</h2>
+        <dl>
+          <div>
+            <dt>Backend</dt>
+            <dd>Python · FastAPI · REST APIs · SQLAlchemy · PostgreSQL · Alembic</dd>
+          </div>
+          <div>
+            <dt>{copy.automationLabel}</dt>
+            <dd>{copy.automation}</dd>
+          </div>
+          <div>
+            <dt>{copy.toolsLabel}</dt>
+            <dd>Git · GitHub · Linux · Docker · pytest · GitHub Actions</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="education" aria-labelledby="education-title">
+        <h2 id="education-title">{copy.educationLabel}</h2>
+        <p>
+          <strong lang="es">Ingeniería en Conectividad y Redes — DuocUC</strong>
+          <span class="education-status">{copy.duocStatus}</span>
+        </p>
+        <p>
+          <strong lang="es">Programador Full Stack — 4Geeks Academy</strong>
+          <span class="education-status">{copy.academyStatus}</span>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  @font-face {
+    font-family: 'Manrope';
+    src: url('/fonts/manrope-latin-variable.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: block;
+  }
+
+  @page {
+    size: A4;
+    margin: 16mm;
+  }
+
+  :global(html) {
+    color-scheme: light;
+    background: #fff;
+  }
+
+  :global(body) {
+    margin: 0;
+    background: #fff;
+    color: #202521;
+    font-family: 'Manrope', sans-serif;
+    font-variant-ligatures: none;
+    font-feature-settings: 'calt' 0;
+    font-size: 10.5pt;
+    line-height: 1.34;
+  }
+
+  main {
+    max-width: 178mm;
+    margin: 0 auto;
+    padding: 8mm 5mm;
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  ul,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 27pt;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+  }
+
+  .role {
+    margin-top: 6pt;
+    font-size: 13pt;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .focus {
+    margin-top: 3pt;
+    color: #214e3b;
+    font-size: 10.5pt;
+    font-weight: 500;
+  }
+
+  .contact {
+    margin-top: 8pt;
+    font-size: 9.5pt;
+  }
+
+  .contact a {
+    white-space: nowrap;
+  }
+
+  a {
+    color: #214e3b;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  a:focus-visible {
+    outline: 2px solid #214e3b;
+    outline-offset: 2px;
+  }
+
+  section {
+    margin-top: 10pt;
+  }
+
+  h2 {
+    margin-bottom: 6pt;
+    color: #214e3b;
+    font-size: 9pt;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+    break-after: avoid;
+  }
+
+  .projects,
+  .skills,
+  .education {
+    padding-top: 7pt;
+    border-top: 0.5pt solid #d8ddd5;
+  }
+
+  h3 {
+    font-size: 14pt;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    break-after: avoid;
+  }
+
+  .technology {
+    margin-top: 3pt;
+    color: #414a43;
+    font-size: 9.5pt;
+    line-height: 1.3;
+    break-after: avoid;
+  }
+
+  ul {
+    margin-top: 6pt;
+    padding-left: 12pt;
+  }
+
+  li + li {
+    margin-top: 3pt;
+  }
+
+  li,
+  .skills dl > div,
+  .education p {
+    break-inside: avoid;
+  }
+
+  p,
+  li {
+    orphans: 2;
+    widows: 2;
+  }
+
+  .project-links {
+    margin-top: 5pt;
+    font-size: 9.5pt;
+    line-height: 1.3;
+  }
+
+  article + article {
+    margin-top: 12pt;
+  }
+
+  .skills {
+    font-size: 10pt;
+    line-height: 1.35;
+  }
+
+  dt {
+    font-weight: 600;
+  }
+
+  dl > div + div {
+    margin-top: 5pt;
+  }
+
+  .education {
+    font-size: 10pt;
+    line-height: 1.35;
+  }
+
+  .education strong {
+    font-weight: 600;
+  }
+
+  .education-status {
+    display: block;
+    font-size: 9.5pt;
+  }
+
+  .education p + p {
+    margin-top: 5pt;
+  }
+
+  @media print {
+    main {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+</style>
