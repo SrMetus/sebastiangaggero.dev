@@ -1,0 +1,483 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="Job Radar — Sebastian Gaggero">
+  <main>
+    <article class="case-study" aria-labelledby="case-study-title">
+      <header class="container-reading introduction">
+        <a class="back-link" href="/#work">
+          ← Back to work
+        </a>
+        <h1 id="case-study-title">Job Radar</h1>
+        <p class="lead">
+          External job offers need a consistent structure before they can be compared, filtered, and
+          ranked.
+        </p>
+        <p>
+          Job Radar imports offers from Remotive and Python.org, stores normalized records in
+          PostgreSQL, and exposes them through a FastAPI REST API and a simple web interface. Its
+          scoring profile targets junior remote Python/backend roles—the kind of work I’m looking
+          for.
+        </p>
+        <p>
+          The engineering work centers on interpreting source data, deciding what counts as a
+          duplicate, and making ranking behavior predictable.
+        </p>
+        <a
+          class="project-link"
+          href="https://job-radar-bonw.onrender.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open live project →
+        </a>
+      </header>
+
+      <section class="container chapter" aria-labelledby="normalization-title">
+        <p class="section-marker">01 / SOURCES</p>
+        <div class="chapter-copy">
+          <h2 id="normalization-title">Two sources, one record shape</h2>
+          <p>
+            Remotive supplies JSON with job descriptions. Python.org provides an HTML listing page.
+            Its importer extracts the available fields and categories without following individual
+            job pages.
+          </p>
+          <p>
+            Both importers produce the same record shape. Source-specific company and location
+            fields become shared fields. Remotive descriptions are converted from HTML to plain
+            text, removing scripts, styles, and other non-content elements while retaining readable
+            text.
+          </p>
+          <p>
+            Both sources use title keywords to infer seniority, with explicit precedence when
+            several labels match. An unrecognized title becomes <code>unknown</code>. Remotive
+            records are marked remote; Python.org’s remote flag comes from title and location
+            wording, including checks for explicit negations.
+          </p>
+          <p>
+            Malformed records are skipped. A failed request or an unrecognized source response fails
+            the import. These are separate outcomes: incomplete data should not be mistaken for a
+            successful fetch from a broken source.
+          </p>
+        </div>
+      </section>
+
+      <figure class="container system-trace" aria-describedby="system-caption">
+        <figcaption>
+          <span class="trace-label">SYSTEM TRACE</span>
+          <span class="trace-title">From source data to ranked responses</span>
+        </figcaption>
+        <div class="trace-group">
+          <p class="trace-label" id="import-label">
+            IMPORT
+          </p>
+          <dl class="trace-stages" aria-labelledby="import-label">
+            <div>
+              <dt class="trace-stage">01 / SOURCE</dt>
+              <dd>Remotive JSON / Python.org listing HTML</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">02 / NORMALIZE</dt>
+              <dd>Source-specific extraction and normalization → shared job record</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">03 / IDENTIFY</dt>
+              <dd>Exact URL checks → per-record inserts</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">04 / STORE</dt>
+              <dd>
+                PostgreSQL<span class="trace-detail">unique URL constraint</span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div class="trace-group">
+          <p class="trace-label" id="read-label">
+            READ
+          </p>
+          <dl class="trace-stages" aria-labelledby="read-label">
+            <div>
+              <dt class="trace-stage">01 / REQUEST</dt>
+              <dd>
+                <code>GET /jobs</code>
+              </dd>
+            </div>
+            <div>
+              <dt class="trace-stage">02 / FILTER</dt>
+              <dd>Database filters</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">03 / ORDER</dt>
+              <dd>
+                <dl class="trace-orders">
+                  <div>
+                    <dt>Date</dt>
+                    <dd>SQL ordering → pagination</dd>
+                  </div>
+                  <div>
+                    <dt>Score</dt>
+                    <dd>
+                      Load filtered candidates → calculate scores → sort in memory → select page
+                    </dd>
+                  </div>
+                </dl>
+              </dd>
+            </div>
+            <div>
+              <dt class="trace-stage">04 / RETURN</dt>
+              <dd>
+                Response with computed <code>match_score</code>
+              </dd>
+            </div>
+            <div>
+              <dt class="trace-stage">05 / CONSUME</dt>
+              <dd>Frontend / API consumer</dd>
+            </div>
+          </dl>
+        </div>
+        <p class="system-caption" id="system-caption">
+          HTTP import endpoints and the CLI share import services. Scores are calculated when
+          returning records; score ordering also calculates them before pagination. Manual job
+          creation writes directly to storage without importer normalization.
+        </p>
+      </figure>
+
+      <section class="container chapter" aria-labelledby="duplicates-title">
+        <p class="section-marker">02 / IDENTITY</p>
+        <div class="chapter-copy">
+          <h2 id="duplicates-title">What counts as a duplicate</h2>
+          <p>
+            For the MVP, the practical priority was preventing repeated imports from creating
+            duplicate offers.
+          </p>
+          <p>
+            The shared persistence function checks incoming URLs against stored records and URLs
+            already handled in the batch. A database unique constraint provides a second check. Each
+            insert uses a savepoint, allowing a recognized URL conflict to be skipped while the
+            remaining records are processed.
+          </p>
+          <p>
+            Identity is based on the exact URL. Existing URLs are skipped without updating their
+            records. Tracking parameters and URL aliases are not unified.
+          </p>
+          <p>
+            This prevents repeated insertion of the same URL, but it does not identify every
+            duplicate vacancy. The same role can appear on different websites with different
+            URLs—and possibly different titles—and remain as separate records.
+          </p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="api-title">
+        <p class="section-marker">03 / API &amp; PERSISTENCE</p>
+        <div class="chapter-copy">
+          <h2 id="api-title">From stored records to API responses</h2>
+          <p>
+            SQLAlchemy maps a single job model to PostgreSQL, with schema changes managed through
+            Alembic. The stored timestamp records when an offer was added locally, not when the
+            source published it.
+          </p>
+          <p>
+            The API supports remote and seniority filters, text search, and limit/offset pagination.
+            Text search checks title, company, location, and description; search wildcard characters
+            are treated literally. Results can be ordered by date added or match score, with
+            explicit tie-breaking rules.
+          </p>
+          <p>
+            OpenAPI and Swagger expose the request and response structure. The frontend reads the
+            same listing endpoint, keeping retrieval and ranking behavior in the backend.
+          </p>
+          <p>
+            Imports run through protected HTTP endpoints or a one-shot CLI. The CLI attempts both
+            sources with separate database sessions, so one source failure does not stop the other
+            attempt.
+          </p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="scoring-title">
+        <p class="section-marker">04 / SCORING</p>
+        <div class="chapter-copy">
+          <h2 id="scoring-title">A score for the roles I’m looking for</h2>
+          <p>The score uses four inputs: title, description, remote status, and seniority.</p>
+          <p>
+            A relevance check runs first. A record needs a matching developer-role title or a
+            Python, FastAPI, or SQLAlchemy signal before it receives points. Eligible records gain
+            points for technology matches, a relevant title, remote work, and junior or intern
+            seniority. Senior and leadership levels subtract points.
+          </p>
+          <p>
+            Python contributes 20 points; FastAPI and PostgreSQL contribute 10 each. Each technology
+            counts once, so repeated keywords cannot inflate the score. URLs and source metadata are
+            removed from the scoring text.
+          </p>
+          <p>
+            The result is calculated when records are returned, rather than stored. The same inputs
+            under the same rules produce the same score, bounded between 0 and 100. It expresses
+            keyword relevance to this profile, not hiring probability or semantic suitability.
+          </p>
+          <p>
+            Ordering exposes a practical trade-off. Date ordering and pagination run in SQL. Score
+            ordering loads all filtered candidates, calculates their scores in Python, sorts them,
+            and then selects the requested page.
+          </p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="verification-title">
+        <p class="section-marker">05 / VERIFICATION</p>
+        <div class="chapter-copy">
+          <h2 id="verification-title">What is verified</h2>
+          <p>
+            The pytest suite covers normalization, repeated imports, URL conflicts, scoring rules,
+            filters, pagination, and ordering. It also checks malformed source responses, import
+            authentication, and source-failure isolation in the CLI.
+          </p>
+          <p>
+            External responses are mocked, and database tests use SQLite. PostgreSQL migration SQL
+            is rendered and the driver is checked, but the suite does not exercise a live PostgreSQL
+            server.
+          </p>
+          <p>
+            GitHub Actions is configured to run pytest under Python 3.12 on pushes and pull requests
+            targeting <code>main</code>. Docker Compose supplies a local application and PostgreSQL
+            environment; database migrations remain an explicit step.
+          </p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="limitations-title">
+        <p class="section-marker">06 / LIMITS</p>
+        <div class="chapter-copy">
+          <h2 id="limitations-title">Where the current approach stops</h2>
+          <ul class="limitations">
+            <li>
+              <strong>Existing offers are not refreshed.</strong> Reimports leave stored content
+              unchanged, and offers are not removed when they disappear from a source.
+            </li>
+            <li>
+              <strong>Source detail varies.</strong> Python.org listing summaries provide fewer
+              scoring signals than full descriptions. Keyword-based seniority and remote inference
+              can miss ambiguous wording.
+            </li>
+            <li>
+              <strong>Score sorting processes every filtered candidate.</strong> Its work grows with
+              that result set, even when the requested page is small.
+            </li>
+          </ul>
+          <p>
+            These are boundaries of the current implementation, not all deliberate strategies
+            established at the beginning.
+          </p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="reflection-title">
+        <p class="section-marker">07 / REFLECTION</p>
+        <div class="chapter-copy">
+          <h2 id="reflection-title">What I learned, and what I would change next</h2>
+          <p>
+            Scoring and duplicate handling were the most educational parts of the project. They
+            required working with both the data available and the limits of what it could establish.
+          </p>
+          <p>
+            I would add more job sources next: more useful offers, but also more varied data to test
+            normalization, deduplication, and scoring assumptions. That variety could expose edge
+            cases that do not appear with only two sources.
+          </p>
+        </div>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .case-study {
+    padding-block: var(--space-4) var(--space-16);
+  }
+
+  .introduction {
+    margin-block-end: var(--space-12);
+  }
+
+  h1,
+  h2 {
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    margin-block-end: var(--space-6);
+    font-size: calc(var(--font-size-h3) + var(--space-1));
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .chapter {
+    max-inline-size: var(--content-width-reading);
+    padding-block: var(--space-8);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .chapter-copy {
+    min-inline-size: 0;
+    max-inline-size: var(--content-width-reading);
+  }
+
+  .chapter-copy > :last-child {
+    margin-block-end: 0;
+  }
+
+  .section-marker,
+  .trace-label,
+  .trace-stage {
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+  }
+
+  .section-marker {
+    margin-block-end: var(--space-3);
+  }
+
+  .lead {
+    font-size: var(--font-size-body-large);
+  }
+
+  .back-link,
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 3rem;
+  }
+
+  .back-link {
+    margin-block-end: var(--space-4);
+  }
+
+  .project-link {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .system-trace {
+    margin-block: var(--space-4) var(--space-8);
+    padding-block: var(--space-4);
+    max-inline-size: var(--content-width-reading);
+  }
+
+  figcaption {
+    margin-block-end: var(--space-6);
+  }
+
+  figcaption .trace-label,
+  .trace-title,
+  .trace-detail {
+    display: block;
+  }
+
+  figcaption .trace-label {
+    margin-block-end: var(--space-2);
+  }
+
+  .trace-title {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-heading);
+  }
+
+  .trace-group + .trace-group {
+    margin-block-start: var(--space-6);
+  }
+
+  .trace-group > .trace-label {
+    margin-block-end: var(--space-2);
+  }
+
+  .trace-stages,
+  .trace-orders,
+  dd {
+    margin: 0;
+  }
+
+  .trace-stages > div {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-3);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .trace-stages dd {
+    min-inline-size: 0;
+  }
+
+  .trace-detail {
+    font-size: var(--font-size-small);
+  }
+
+  .trace-orders > div + div {
+    margin-block-start: var(--space-3);
+  }
+
+  .trace-orders dt {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .system-caption {
+    margin: var(--space-4) 0 0;
+    font-size: var(--font-size-small);
+  }
+
+  .limitations {
+    margin-block: 0 var(--space-6);
+    padding-inline-start: var(--space-6);
+  }
+
+  .limitations li::marker {
+    color: var(--color-primary);
+  }
+
+  .limitations li + li {
+    margin-block-start: var(--space-4);
+  }
+
+  @media (min-width: 48rem) {
+    .trace-stages > div {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      gap: var(--space-6);
+      align-items: baseline;
+    }
+
+    .trace-orders > div {
+      display: grid;
+      grid-template-columns: var(--space-12) minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: baseline;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .case-study {
+      padding-block-end: var(--space-24);
+    }
+
+    .introduction {
+      margin-block-end: var(--space-16);
+    }
+
+    .chapter {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      column-gap: var(--space-8);
+      max-inline-size: calc(var(--content-width-reading) / 0.75 + var(--space-8));
+      padding-block: var(--space-12);
+    }
+
+    .section-marker {
+      margin: 0;
+      padding-block-start: var(--space-2);
+    }
+  }
+</style>

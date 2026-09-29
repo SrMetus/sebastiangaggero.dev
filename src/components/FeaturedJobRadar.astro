@@ -77,9 +77,17 @@
         <dd>Docker</dd>
       </div>
     </dl>
-    <a href="https://job-radar-bonw.onrender.com/" target="_blank" rel="noopener noreferrer">
-      Open live project →
-    </a>
+    <div class="system-links">
+      <a href="/projects/job-radar">Read the engineering case study →</a>
+      <a
+        class="live-link"
+        href="https://job-radar-bonw.onrender.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open live project →
+      </a>
+    </div>
   </footer>
 </section>
 
@@ -201,6 +209,17 @@
     align-items: center;
     min-block-size: 3rem;
     font-weight: var(--font-weight-semibold);
+  }
+
+  .system-links {
+    display: grid;
+    align-content: start;
+    min-inline-size: 0;
+    gap: var(--space-1);
+  }
+
+  .system-links .live-link {
+    font-weight: var(--font-weight-regular);
   }
 
   @media (min-width: 48rem) {
