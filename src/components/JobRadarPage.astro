@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from './Footer.astro';
 import { jobRadar } from '../i18n/job-radar';
+import { metadata } from '../i18n/metadata';
 import { routes, type Locale } from '../i18n/routes';
 
 interface Props {
@@ -11,7 +12,7 @@ const { locale } = Astro.props;
 const content = jobRadar[locale];
 ---
 
-<BaseLayout title="Job Radar — Sebastian Gaggero" locale={locale} page="jobRadar">
+<BaseLayout metadata={metadata.jobRadar[locale]} locale={locale} page="jobRadar">
   <main>
     <article class="case-study" aria-labelledby="case-study-title">
       <header class="container-reading introduction">
