@@ -1,11 +1,16 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['hero'];
+}
+const { content } = Astro.props;
+---
+
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-narrative">
-    <p class="hero-eyebrow">SYSTEMS · APIs · AUTOMATION</p>
-    <h1 id="hero-heading">Python Backend Developer</h1>
-    <p class="hero-description">
-      I build backend systems, APIs and automation with Python to solve practical problems without
-      unnecessary complexity.
-    </p>
+    <p class="hero-eyebrow">{content.eyebrow}</p>
+    <h1 id="hero-heading">{content.heading}</h1>
+    <p class="hero-description">{content.description}</p>
     <div class="hero-actions">
       <a
         class="hero-primary"
@@ -13,7 +18,7 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        Explore Job Radar
+        {content.exploreLabel}
       </a>
       <a
         class="hero-secondary"
@@ -21,15 +26,15 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        View GitHub
+        {content.githubLabel}
       </a>
     </div>
   </div>
   <aside class="hero-focus" aria-labelledby="hero-focus-label">
     <p id="hero-focus-label" class="hero-focus-label">
-      FOCUS
+      {content.focusLabel}
     </p>
-    <p class="hero-focus-content">FastAPI · REST APIs · Automation</p>
+    <p class="hero-focus-content">{content.focus}</p>
   </aside>
 </section>
 

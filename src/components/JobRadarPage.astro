@@ -1,0 +1,393 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from './Footer.astro';
+import { jobRadar } from '../i18n/job-radar';
+import { routes, type Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const content = jobRadar[locale];
+---
+
+<BaseLayout title="Job Radar — Sebastian Gaggero" locale={locale} page="jobRadar">
+  <main>
+    <article class="case-study" aria-labelledby="case-study-title">
+      <header class="container-reading introduction">
+        <a class="back-link" href={`${routes.home[locale]}#work`}>
+          {content.backLabel}
+        </a>
+        <h1 id="case-study-title">Job Radar</h1>
+        <p class="lead">{content.lead}</p>
+        <p>{content.introduction}</p>
+        <p>{content.engineeringFocus}</p>
+        <a
+          class="project-link"
+          href="https://job-radar-bonw.onrender.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {content.liveLabel}
+        </a>
+      </header>
+
+      <section class="container chapter" aria-labelledby="normalization-title">
+        <p class="section-marker">01 / {content.sources.label}</p>
+        <div class="chapter-copy">
+          <h2 id="normalization-title">{content.sources.title}</h2>
+          <p>{content.sources.inputs}</p>
+          <p>{content.sources.normalization}</p>
+          <p>
+            {content.sources.seniority.beforeCode} <code>unknown</code>
+            {content.sources.seniority.afterCode}
+          </p>
+          <p>{content.sources.failures}</p>
+        </div>
+      </section>
+
+      <figure class="container system-trace" aria-describedby="system-caption">
+        <figcaption>
+          <span class="trace-label">{content.trace.label}</span>
+          <span class="trace-title">{content.trace.title}</span>
+        </figcaption>
+        <div class="trace-group">
+          <p class="trace-label" id="import-label">
+            {content.trace.importLabel}
+          </p>
+          <dl class="trace-stages" aria-labelledby="import-label">
+            <div>
+              <dt class="trace-stage">01 / {content.trace.sourceLabel}</dt>
+              <dd>{content.trace.source}</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">02 / {content.trace.normalizeLabel}</dt>
+              <dd>{content.trace.normalize}</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">03 / {content.trace.identifyLabel}</dt>
+              <dd>{content.trace.identify}</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">04 / {content.trace.storeLabel}</dt>
+              <dd>
+                PostgreSQL<span class="trace-detail">{content.trace.constraint}</span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div class="trace-group">
+          <p class="trace-label" id="read-label">
+            {content.trace.readLabel}
+          </p>
+          <dl class="trace-stages" aria-labelledby="read-label">
+            <div>
+              <dt class="trace-stage">01 / {content.trace.requestLabel}</dt>
+              <dd>
+                <code>GET /jobs</code>
+              </dd>
+            </div>
+            <div>
+              <dt class="trace-stage">02 / {content.trace.filterLabel}</dt>
+              <dd>{content.trace.filter}</dd>
+            </div>
+            <div>
+              <dt class="trace-stage">03 / {content.trace.orderLabel}</dt>
+              <dd>
+                <dl class="trace-orders">
+                  <div>
+                    <dt>{content.trace.dateLabel}</dt>
+                    <dd>{content.trace.date}</dd>
+                  </div>
+                  <div>
+                    <dt>{content.trace.scoreLabel}</dt>
+                    <dd>{content.trace.score}</dd>
+                  </div>
+                </dl>
+              </dd>
+            </div>
+            <div>
+              <dt class="trace-stage">04 / {content.trace.returnLabel}</dt>
+              <dd>
+                {content.trace.response} <code>match_score</code>
+              </dd>
+            </div>
+            <div>
+              <dt class="trace-stage">05 / {content.trace.consumeLabel}</dt>
+              <dd>{content.trace.consume}</dd>
+            </div>
+          </dl>
+        </div>
+        <p class="system-caption" id="system-caption">
+          {content.trace.caption}
+        </p>
+      </figure>
+
+      <section class="container chapter" aria-labelledby="duplicates-title">
+        <p class="section-marker">02 / {content.identity.label}</p>
+        <div class="chapter-copy">
+          <h2 id="duplicates-title">{content.identity.title}</h2>
+          <p>{content.identity.priority}</p>
+          <p>{content.identity.persistence}</p>
+          <p>{content.identity.exactUrl}</p>
+          <p>{content.identity.limits}</p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="api-title">
+        <p class="section-marker">03 / {content.api.label}</p>
+        <div class="chapter-copy">
+          <h2 id="api-title">{content.api.title}</h2>
+          <p>{content.api.storage}</p>
+          <p>{content.api.queries}</p>
+          <p>{content.api.interface}</p>
+          <p>{content.api.imports}</p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="scoring-title">
+        <p class="section-marker">04 / {content.scoring.label}</p>
+        <div class="chapter-copy">
+          <h2 id="scoring-title">{content.scoring.title}</h2>
+          <p>{content.scoring.inputs}</p>
+          <p>{content.scoring.rules}</p>
+          <p>{content.scoring.weights}</p>
+          <p>{content.scoring.meaning}</p>
+          <p>{content.scoring.ordering}</p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="verification-title">
+        <p class="section-marker">05 / {content.verification.label}</p>
+        <div class="chapter-copy">
+          <h2 id="verification-title">{content.verification.title}</h2>
+          <p>{content.verification.coverage}</p>
+          <p>{content.verification.limits}</p>
+          <p>
+            {content.verification.environment.beforeCode} <code>main</code>
+            {content.verification.environment.afterCode}
+          </p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="limitations-title">
+        <p class="section-marker">06 / {content.limitations.label}</p>
+        <div class="chapter-copy">
+          <h2 id="limitations-title">{content.limitations.title}</h2>
+          <ul class="limitations">
+            <li>
+              <strong>{content.limitations.refresh.title}</strong>{' '}
+              {content.limitations.refresh.description}
+            </li>
+            <li>
+              <strong>{content.limitations.detail.title}</strong>{' '}
+              {content.limitations.detail.description}
+            </li>
+            <li>
+              <strong>{content.limitations.sorting.title}</strong>{' '}
+              {content.limitations.sorting.description}
+            </li>
+          </ul>
+          <p>{content.limitations.note}</p>
+        </div>
+      </section>
+
+      <section class="container chapter" aria-labelledby="reflection-title">
+        <p class="section-marker">07 / {content.reflection.label}</p>
+        <div class="chapter-copy">
+          <h2 id="reflection-title">{content.reflection.title}</h2>
+          <p>{content.reflection.learning}</p>
+          <p>{content.reflection.next}</p>
+        </div>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .case-study {
+    padding-block: var(--space-4) var(--space-16);
+  }
+
+  .introduction {
+    margin-block-end: var(--space-12);
+  }
+
+  h1,
+  h2 {
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    margin-block-end: var(--space-6);
+    font-size: calc(var(--font-size-h3) + var(--space-1));
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .chapter {
+    max-inline-size: var(--content-width-reading);
+    padding-block: var(--space-8);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .chapter-copy {
+    min-inline-size: 0;
+    max-inline-size: var(--content-width-reading);
+  }
+
+  .chapter-copy > :last-child {
+    margin-block-end: 0;
+  }
+
+  .section-marker,
+  .trace-label,
+  .trace-stage {
+    color: var(--color-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+  }
+
+  .section-marker {
+    margin-block-end: var(--space-3);
+  }
+
+  .lead {
+    font-size: var(--font-size-body-large);
+  }
+
+  .back-link,
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 3rem;
+  }
+
+  .back-link {
+    margin-block-end: var(--space-4);
+  }
+
+  .project-link {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .system-trace {
+    margin-block: var(--space-4) var(--space-8);
+    padding-block: var(--space-4);
+    max-inline-size: var(--content-width-reading);
+  }
+
+  figcaption {
+    margin-block-end: var(--space-6);
+  }
+
+  figcaption .trace-label,
+  .trace-title,
+  .trace-detail {
+    display: block;
+  }
+
+  figcaption .trace-label {
+    margin-block-end: var(--space-2);
+  }
+
+  .trace-title {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-heading);
+  }
+
+  .trace-group + .trace-group {
+    margin-block-start: var(--space-6);
+  }
+
+  .trace-group > .trace-label {
+    margin-block-end: var(--space-2);
+  }
+
+  .trace-stages,
+  .trace-orders,
+  dd {
+    margin: 0;
+  }
+
+  .trace-stages > div {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-3);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .trace-stages dd {
+    min-inline-size: 0;
+  }
+
+  .trace-detail {
+    font-size: var(--font-size-small);
+  }
+
+  .trace-orders > div + div {
+    margin-block-start: var(--space-3);
+  }
+
+  .trace-orders dt {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .system-caption {
+    margin: var(--space-4) 0 0;
+    font-size: var(--font-size-small);
+  }
+
+  .limitations {
+    margin-block: 0 var(--space-6);
+    padding-inline-start: var(--space-6);
+  }
+
+  .limitations li::marker {
+    color: var(--color-primary);
+  }
+
+  .limitations li + li {
+    margin-block-start: var(--space-4);
+  }
+
+  @media (min-width: 48rem) {
+    .trace-stages > div {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      gap: var(--space-6);
+      align-items: baseline;
+    }
+
+    .trace-orders > div {
+      display: grid;
+      grid-template-columns: var(--space-12) minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: baseline;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .case-study {
+      padding-block-end: var(--space-24);
+    }
+
+    .introduction {
+      margin-block-end: var(--space-16);
+    }
+
+    .chapter {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      column-gap: var(--space-8);
+      max-inline-size: calc(var(--content-width-reading) / 0.75 + var(--space-8));
+      padding-block: var(--space-12);
+    }
+
+    .section-marker {
+      margin: 0;
+      padding-block-start: var(--space-2);
+    }
+  }
+</style>

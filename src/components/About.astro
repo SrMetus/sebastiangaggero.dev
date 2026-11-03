@@ -1,28 +1,32 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['about'];
+}
+const { content } = Astro.props;
+---
+
 <section id="about" class="about" aria-labelledby="about-heading">
-  <h2 id="about-heading">05 / ABOUT</h2>
+  <h2 id="about-heading">05 / {content.label}</h2>
 
   <div class="about-content">
     <div class="profile-facts">
       <div>
-        <h3>Background</h3>
+        <h3>{content.backgroundLabel}</h3>
         <ul class="background">
           <li lang="es">Ingeniería en Conectividad y Redes — DuocUC</li>
           <li lang="es">Programador Full Stack — 4Geeks Academy</li>
         </ul>
       </div>
       <div>
-        <h3>Current focus</h3>
-        <p>My current focus is Python backend development, REST APIs and automation.</p>
+        <h3>{content.focusLabel}</h3>
+        <p>{content.focus}</p>
       </div>
     </div>
 
     <div class="engineering-approach">
-      <h3>Engineering approach</h3>
-      <p>
-        I start by understanding the problem and its constraints. I favor straightforward
-        implementations and choose technologies for a specific need. I automate repetitive work and
-        test the parts most likely to fail.
-      </p>
+      <h3>{content.approachLabel}</h3>
+      <p>{content.approach}</p>
     </div>
   </div>
 </section>
