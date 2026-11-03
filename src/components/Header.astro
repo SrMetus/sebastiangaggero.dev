@@ -1,27 +1,50 @@
+---
+import LanguageSelector from './LanguageSelector.astro';
+import { routes, cvPaths, type Locale, type Page } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  page: Page;
+}
+
+const { locale, page } = Astro.props;
+const content = ui[locale];
+const home = routes.home[locale];
+---
+
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/">
+    <a class="brand" href={home}>
       Sebastian Gaggero
     </a>
-    <nav aria-label="Primary">
+    <nav aria-label={content.primaryLabel}>
       <ul role="list">
         <li>
-          <a href="/#work">Work</a>
+          <a href={`${home}#work`}>{content.work}</a>
         </li>
         <li>
-          <a href="/#services">Services</a>
+          <a href={`${home}#services`}>{content.services}</a>
         </li>
         <li>
-          <a href="/#about">About</a>
+          <a href={`${home}#about`}>{content.about}</a>
         </li>
         <li>
-          <a href="/#contact">Contact</a>
+          <a href={`${home}#contact`}>{content.contact}</a>
         </li>
       </ul>
     </nav>
-    <a class="cv-link" href="/sebastian-gaggero-cv-en.pdf" download>
-      Download CV
-    </a>
+    <div class="header-utilities">
+      <a class="cv-link" href={cvPaths[locale]} download aria-label={content.downloadCV}>
+        <span class="cv-label-short" aria-hidden="true">
+          CV
+        </span>
+        <span class="cv-label-full" aria-hidden="true">
+          {content.downloadCV}
+        </span>
+      </a>
+      <LanguageSelector locale={locale} page={page} />
+    </div>
   </div>
 </header>
 
@@ -61,11 +84,20 @@
     max-inline-size: 100%;
   }
 
-  .cv-link {
+  .header-utilities {
     grid-column: 2;
     grid-row: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .cv-link {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    min-inline-size: 1.5rem;
     min-block-size: 2.75rem;
     color: var(--color-text);
     font-size: var(--font-size-small);
@@ -77,6 +109,10 @@
 
   .cv-link:hover {
     color: var(--color-primary);
+  }
+
+  .cv-label-full {
+    display: none;
   }
 
   ul {
@@ -103,14 +139,31 @@
     text-decoration: underline;
   }
 
+  ul:lang(es) {
+    column-gap: var(--space-3);
+  }
+
   @media (min-width: 48rem) {
+    .cv-label-short {
+      display: none;
+    }
+
+    .cv-label-full {
+      display: inline;
+    }
+
+    .header-utilities {
+      gap: var(--space-3);
+    }
+
     .header-inner {
       row-gap: var(--space-1);
       column-gap: var(--space-6);
       padding-block: var(--space-6);
     }
 
-    ul {
+    ul,
+    ul:lang(es) {
       column-gap: var(--space-6);
     }
 
@@ -129,7 +182,7 @@
       grid-row: 1;
     }
 
-    .cv-link {
+    .header-utilities {
       grid-column: 3;
     }
   }

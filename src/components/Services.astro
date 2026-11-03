@@ -1,78 +1,69 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['services'];
+}
+const { content } = Astro.props;
+---
+
 <section id="services" class="services" aria-labelledby="services-heading">
   <header class="services-introduction">
-    <h2 id="services-heading">03 / SERVICES</h2>
-    <p>
-      I build backend systems and automation for workflows that need reliable logic, data handling
-      or integration between services.
-    </p>
+    <h2 id="services-heading">03 / {content.label}</h2>
+    <p>{content.introduction}</p>
   </header>
 
   <div class="service-row">
-    <h3>Backend &amp; APIs</h3>
+    <h3>{content.backendTitle}</h3>
     <dl>
       <div>
-        <dt>THE NEED</dt>
-        <dd>
-          An application needs a backend to validate requests, apply business rules and store data.
-        </dd>
+        <dt>{content.needLabel}</dt>
+        <dd>{content.backendNeed}</dd>
       </div>
       <div>
-        <dt>WHAT I CAN BUILD</dt>
-        <dd>Python and FastAPI services with REST endpoints and PostgreSQL persistence.</dd>
+        <dt>{content.solutionLabel}</dt>
+        <dd>{content.backendSolution}</dd>
       </div>
     </dl>
   </div>
 
   <div class="service-row">
-    <h3>Automation</h3>
+    <h3>{content.automationTitle}</h3>
     <dl>
       <div>
-        <dt>THE NEED</dt>
-        <dd>
-          Files need processing, data needs cleaning, or the same workflow keeps being repeated
-          manually.
-        </dd>
+        <dt>{content.needLabel}</dt>
+        <dd>{content.automationNeed}</dd>
       </div>
       <div>
-        <dt>WHAT I CAN BUILD</dt>
-        <dd>
-          Python automation for repeatable workflows, including scripts, browser automation and data
-          processing when appropriate.
-        </dd>
+        <dt>{content.solutionLabel}</dt>
+        <dd>{content.automationSolution}</dd>
       </div>
     </dl>
   </div>
 
   <div class="service-row">
-    <h3>API Integrations</h3>
+    <h3>{content.integrationsTitle}</h3>
     <dl>
       <div>
-        <dt>THE NEED</dt>
-        <dd>Information needs to move between services with different APIs and data formats.</dd>
+        <dt>{content.needLabel}</dt>
+        <dd>{content.integrationsNeed}</dd>
       </div>
       <div>
-        <dt>WHAT I CAN BUILD</dt>
-        <dd>
-          Python integrations that fetch, transform and send data, with explicit handling of API
-          failures.
-        </dd>
+        <dt>{content.solutionLabel}</dt>
+        <dd>{content.integrationsSolution}</dd>
       </div>
     </dl>
   </div>
 
   <div class="service-row">
-    <h3>Internal Tools</h3>
+    <h3>{content.toolsTitle}</h3>
     <dl>
       <div>
-        <dt>THE NEED</dt>
-        <dd>A team needs a focused tool for a specific operational process.</dd>
+        <dt>{content.needLabel}</dt>
+        <dd>{content.toolsNeed}</dd>
       </div>
       <div>
-        <dt>WHAT I CAN BUILD</dt>
-        <dd>
-          Small internal applications built around that workflow, with the necessary data handling
-          and business logic kept in one place.
-        </dd>
+        <dt>{content.solutionLabel}</dt>
+        <dd>{content.toolsSolution}</dd>
       </div>
     </dl>
   </div>

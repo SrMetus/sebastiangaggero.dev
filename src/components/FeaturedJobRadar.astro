@@ -1,46 +1,48 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['featuredJobRadar'];
+  caseStudyHref: string;
+}
+const { content, caseStudyHref } = Astro.props;
+---
+
 <section id="work" class="featured-system" aria-labelledby="job-radar-title">
   <header class="system-introduction">
     <div>
-      <p class="section-label">01 / FEATURED SYSTEM</p>
+      <p class="section-label">01 / {content.label}</p>
       <h2 id="job-radar-title">Job Radar</h2>
     </div>
     <div class="system-summary">
-      <p class="system-problem">
-        External job offers need a consistent structure before they can be compared, filtered and
-        ranked.
-      </p>
-      <p>
-        Job Radar collects external job offers, normalizes their data and removes duplicates by URL.
-        The application exposes structured results through a FastAPI REST API with filtering and
-        pagination, while deterministic scoring rules keep ranking behavior predictable.
-      </p>
+      <p class="system-problem">{content.problem}</p>
+      <p>{content.summary}</p>
     </div>
   </header>
 
   <div class="system-explanation">
     <figure class="system-overview">
       <figcaption>
-        <span class="section-label">SYSTEM OVERVIEW</span>
-        <span class="overview-caption">Logical responsibilities, not execution order.</span>
+        <span class="section-label">{content.overviewLabel}</span>
+        <span class="overview-caption">{content.overviewCaption}</span>
       </figcaption>
-      <p class="system-input">External offers</p>
+      <p class="system-input">{content.input}</p>
       <dl class="system-stages">
         <div class="system-stage">
-          <dt>Prepare</dt>
-          <dd>ingestion</dd>
-          <dd>normalization</dd>
-          <dd>URL deduplication</dd>
+          <dt>{content.prepare}</dt>
+          <dd>{content.ingestion}</dd>
+          <dd>{content.normalization}</dd>
+          <dd>{content.deduplication}</dd>
         </div>
         <div class="system-stage">
-          <dt>Persist</dt>
+          <dt>{content.persist}</dt>
           <dd>PostgreSQL</dd>
         </div>
         <div class="system-stage">
-          <dt>Serve</dt>
+          <dt>{content.serve}</dt>
           <dd>REST API</dd>
-          <dd>filtering</dd>
-          <dd>pagination</dd>
-          <dd>deterministic scoring</dd>
+          <dd>{content.filtering}</dd>
+          <dd>{content.pagination}</dd>
+          <dd>{content.scoring}</dd>
           <dd>frontend</dd>
         </div>
       </dl>
@@ -48,16 +50,16 @@
 
     <dl class="system-notes">
       <div>
-        <dt>URL IDENTITY</dt>
-        <dd>Duplicate offers are identified through their source URL.</dd>
+        <dt>{content.identityLabel}</dt>
+        <dd>{content.identity}</dd>
       </div>
       <div>
-        <dt>DETERMINISTIC SCORING</dt>
-        <dd>Defined scoring rules keep ranking behavior predictable and repeatable.</dd>
+        <dt>{content.scoringLabel}</dt>
+        <dd>{content.scoringNote}</dd>
       </div>
       <div>
-        <dt>ENGINEERING EVIDENCE</dt>
-        <dd>OpenAPI documentation · pytest · GitHub Actions</dd>
+        <dt>{content.evidenceLabel}</dt>
+        <dd>{content.evidence}</dd>
       </div>
     </dl>
   </div>
@@ -65,27 +67,27 @@
   <footer class="system-footer">
     <dl class="system-metadata">
       <div>
-        <dt>APPLICATION</dt>
+        <dt>{content.applicationLabel}</dt>
         <dd>Python 3.12 · FastAPI</dd>
       </div>
       <div>
-        <dt>DATA</dt>
+        <dt>{content.dataLabel}</dt>
         <dd>PostgreSQL · SQLAlchemy · Alembic</dd>
       </div>
       <div>
-        <dt>DELIVERY</dt>
+        <dt>{content.deliveryLabel}</dt>
         <dd>Docker</dd>
       </div>
     </dl>
     <div class="system-links">
-      <a href="/projects/job-radar">Read the engineering case study →</a>
+      <a href={caseStudyHref}>{content.caseStudyLabel}</a>
       <a
         class="live-link"
         href="https://job-radar-bonw.onrender.com/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        Open live project →
+        {content.liveLabel}
       </a>
     </div>
   </footer>

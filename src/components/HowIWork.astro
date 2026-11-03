@@ -1,35 +1,34 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['howIWork'];
+}
+const { content } = Astro.props;
+---
+
 <section class="how-i-work" aria-labelledby="how-i-work-heading">
-  <h2 id="how-i-work-heading">06 / HOW I WORK</h2>
+  <h2 id="how-i-work-heading">06 / {content.label}</h2>
 
   <ol class="process-index" role="list">
     <li>
-      <h3>Understand</h3>
-      <p>Clarify the problem, constraints and expected behavior before choosing a solution.</p>
+      <h3>{content.understandTitle}</h3>
+      <p>{content.understand}</p>
     </li>
     <li>
-      <h3>Scope</h3>
-      <p>Define what needs to be built now and what stays outside the current solution.</p>
+      <h3>{content.scopeTitle}</h3>
+      <p>{content.scope}</p>
     </li>
     <li>
-      <h3>Build</h3>
-      <p>
-        Keep the implementation straightforward and use technology only when it serves a specific
-        need.
-      </p>
+      <h3>{content.buildTitle}</h3>
+      <p>{content.build}</p>
     </li>
     <li>
-      <h3>Verify</h3>
-      <p>
-        Check the behavior most likely to fail and review the result against the expected behavior
-        before considering the work complete.
-      </p>
+      <h3>{content.verifyTitle}</h3>
+      <p>{content.verify}</p>
     </li>
     <li>
-      <h3>Deliver</h3>
-      <p>
-        Leave the solution understandable, document what is useful, and make relevant limitations or
-        next steps explicit.
-      </p>
+      <h3>{content.deliverTitle}</h3>
+      <p>{content.deliver}</p>
     </li>
   </ol>
 </section>

@@ -1,59 +1,57 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['selectedWork'];
+}
+const { content } = Astro.props;
+---
+
 <section class="selected-work" aria-labelledby="selected-work-heading">
   <h2 id="selected-work-heading" class="section-label">
-    02 / SELECTED WORK
+    02 / {content.label}
   </h2>
   <article class="project" aria-labelledby="surtr-title">
     <header class="project-identity">
       <h3 id="surtr-title">Surtr Alert</h3>
-      <p>Python notification plugin for WeeChat on Linux</p>
+      <p>{content.description}</p>
     </header>
 
     <div class="project-narrative">
-      <p class="project-problem">
-        Relevant IRC activity can be easy to miss when attention is elsewhere.
-      </p>
-      <p>
-        Surtr Alert adds local notifications for channel mentions, private messages and IRC notices,
-        with optional alerts when configured friends join or leave.
-      </p>
-      <p>
-        Python callbacks respond to WeeChat signal hooks, while settings stay in WeeChat’s native
-        plugin configuration. No external web service is required.
-      </p>
+      <p class="project-problem">{content.problem}</p>
+      <p>{content.summary}</p>
+      <p>{content.implementation}</p>
     </div>
 
     <figure class="notification-path">
       <figcaption>
-        <span class="section-label">FROM IRC ACTIVITY TO A LOCAL ALERT</span>
-        <span class="path-caption">
-          Conceptual inputs and outputs, not execution or fallback order.
-        </span>
+        <span class="section-label">{content.pathLabel}</span>
+        <span class="path-caption">{content.pathCaption}</span>
       </figcaption>
       <div class="path-details">
         <div class="path-side">
-          <h4>WeeChat events</h4>
+          <h4>{content.eventsLabel}</h4>
           <ul>
-            <li>channel mentions</li>
-            <li>private messages</li>
-            <li>IRC notices</li>
-            <li>configured friend activity</li>
+            <li>{content.mentions}</li>
+            <li>{content.messages}</li>
+            <li>{content.notices}</li>
+            <li>{content.friends}</li>
           </ul>
         </div>
         <div class="path-boundary">
-          <p>Python signal hooks</p>
-          <p>Available controls: monitored-channel filters and ignored nicks.</p>
+          <p>{content.hooks}</p>
+          <p>{content.controls}</p>
         </div>
         <div class="path-side">
-          <h4>Local notification</h4>
+          <h4>{content.notificationLabel}</h4>
           <ul>
             <li>notify-send</li>
             <li>terminal</li>
             <li>Zenity</li>
-            <li>local log</li>
+            <li>{content.log}</li>
           </ul>
         </div>
       </div>
-      <p class="configuration-note">Settings stored in WeeChat.</p>
+      <p class="configuration-note">{content.configuration}</p>
     </figure>
 
     <a
@@ -62,7 +60,7 @@
       target="_blank"
       rel="noopener noreferrer"
     >
-      View repository →
+      {content.repositoryLabel}
     </a>
   </article>
 </section>

@@ -1,21 +1,26 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['contact'];
+}
+const { content } = Astro.props;
+---
+
 <section id="contact" class="contact" aria-labelledby="contact-heading">
-  <h2 id="contact-heading">07 / CONTACT</h2>
+  <h2 id="contact-heading">07 / {content.label}</h2>
 
   <div class="contact-content">
-    <p>
-      If you’re hiring for Python backend work or need help with backend systems, automation or
-      integrations, LinkedIn is the best place to reach me.
-    </p>
+    <p>{content.introduction}</p>
     <div class="contact-links">
       <a
         href="https://www.linkedin.com/in/sebastiangaggero/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        Contact on LinkedIn →
+        {content.contactLabel}
       </a>
       <a href="https://github.com/SrMetus" target="_blank" rel="noopener noreferrer">
-        View GitHub →
+        {content.githubLabel}
       </a>
     </div>
   </div>

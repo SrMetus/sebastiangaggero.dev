@@ -1,10 +1,15 @@
+---
+import type { HomeContent } from '../i18n/home';
+interface Props {
+  content: HomeContent['capabilities'];
+}
+const { content } = Astro.props;
+---
+
 <section class="capabilities" aria-labelledby="capabilities-heading">
   <header class="capabilities-introduction">
-    <h2 id="capabilities-heading">04 / CAPABILITIES</h2>
-    <p>
-      A compact view of the tools and technical areas I use across backend development, automation
-      and integrations.
-    </p>
+    <h2 id="capabilities-heading">04 / {content.label}</h2>
+    <p>{content.introduction}</p>
   </header>
 
   <dl class="capability-index">
@@ -16,24 +21,24 @@
       </dd>
     </div>
     <div class="capability-row">
-      <dt>Automation</dt>
+      <dt>{content.automationLabel}</dt>
       <dd>
-        <p>Python scripting · Playwright</p>
-        <p>Data processing · browser workflows</p>
+        <p>{content.automationTools}</p>
+        <p>{content.automationWork}</p>
       </dd>
     </div>
     <div class="capability-row">
-      <dt>Engineering Workflow</dt>
+      <dt>{content.workflowLabel}</dt>
       <dd>
         <p>Git · GitHub · Linux · Docker</p>
         <p>pytest · GitHub Actions</p>
       </dd>
     </div>
     <div class="capability-row">
-      <dt>Integrations</dt>
+      <dt>{content.integrationsLabel}</dt>
       <dd>
-        <p>External APIs · JSON · authentication</p>
-        <p>Service-to-service data flows</p>
+        <p>{content.integrationTools}</p>
+        <p>{content.integrationWork}</p>
       </dd>
     </div>
   </dl>

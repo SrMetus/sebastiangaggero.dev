@@ -1,0 +1,68 @@
+---
+import { routes, type Locale, type Page } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  page: Page;
+}
+
+const { locale, page } = Astro.props;
+---
+
+<div class="language-selector" role="group" aria-label={ui[locale].languageLabel}>
+  <a
+    href={routes[page].en}
+    lang="en"
+    hreflang="en"
+    aria-label="English"
+    aria-current={locale === 'en' ? 'page' : undefined}
+  >
+    EN
+  </a>
+  <span aria-hidden="true">/</span>
+  <a
+    href={routes[page].es}
+    lang="es"
+    hreflang="es"
+    aria-label="Español"
+    aria-current={locale === 'es' ? 'page' : undefined}
+  >
+    ES
+  </a>
+</div>
+
+<style>
+  .language-selector {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 2rem;
+    min-block-size: 2.75rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  a[aria-current='page'] {
+    font-weight: var(--font-weight-semibold);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  @media (min-width: 48rem) {
+    a {
+      min-inline-size: 2.75rem;
+    }
+  }
+</style>
