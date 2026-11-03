@@ -1,15 +1,30 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
-import type { Locale, Page } from '../i18n/routes';
+import { routes, type Locale, type Page } from '../i18n/routes';
+import type { PageMetadata } from '../i18n/metadata';
 
 interface Props {
-  title: string;
+  metadata: PageMetadata;
   locale: Locale;
   page: Page;
 }
 
-const { title, locale, page } = Astro.props;
+const { metadata, locale, page } = Astro.props;
+const canonical = new URL(routes[page][locale], Astro.site).href;
+const alternates = {
+  en: new URL(routes[page].en, Astro.site).href,
+  es: new URL(routes[page].es, Astro.site).href,
+};
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': new URL('/#person', Astro.site).href,
+  name: 'Sebastian Gaggero',
+  url: new URL('/', Astro.site).href,
+  jobTitle: locale === 'en' ? 'Python Backend Developer' : 'Desarrollador Backend Python',
+  sameAs: ['https://github.com/SrMetus', 'https://www.linkedin.com/in/sebastiangaggero/'],
+};
 ---
 
 <!doctype html>
@@ -38,7 +53,26 @@ const { title, locale, page } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <title>{title}</title>
+    <title>{metadata.title}</title>
+    <meta name="description" content={metadata.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={alternates.en} />
+    <link rel="alternate" hreflang="es" href={alternates.es} />
+    <link rel="alternate" hreflang="x-default" href={alternates.en} />
+    <meta property="og:title" content={metadata.title} />
+    <meta property="og:description" content={metadata.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={metadata.ogType} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={metadata.title} />
+    <meta name="twitter:description" content={metadata.description} />
+    {page === 'home' && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(person).replace(/</g, '\\u003c')}
+      ></script>
+    )}
   </head>
   <body>
     <Header locale={locale} page={page} />
