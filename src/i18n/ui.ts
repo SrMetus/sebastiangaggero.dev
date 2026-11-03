@@ -8,6 +8,7 @@ interface UIContent {
   contact: string;
   downloadCV: string;
   languageLabel: string;
+  darkMode: string;
 }
 
 export const ui = {
@@ -19,6 +20,7 @@ export const ui = {
     contact: 'Contact',
     downloadCV: 'Download CV',
     languageLabel: 'Language',
+    darkMode: 'Dark mode',
   },
   es: {
     primaryLabel: 'Principal',
@@ -28,5 +30,6 @@ export const ui = {
     contact: 'Contacto',
     downloadCV: 'Descargar CV',
     languageLabel: 'Idioma',
+    darkMode: 'Modo oscuro',
   },
 } satisfies Record<Locale, UIContent>;

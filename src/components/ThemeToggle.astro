@@ -1,0 +1,122 @@
+---
+import type { Locale } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<button
+  class="theme-toggle"
+  type="button"
+  aria-label={ui[locale].darkMode}
+  aria-pressed="false"
+  data-theme-toggle
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <g class="sun">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+    </g>
+    <path class="moon" d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+  </svg>
+</button>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  if (button) {
+    const root = document.documentElement;
+    const storageKey = 'sebastiangaggero.dev:theme';
+    let explicitChoice = false;
+    try {
+      const saved = localStorage.getItem(storageKey);
+      explicitChoice = saved === 'light' || saved === 'dark';
+    } catch {
+      // The current page remains usable without storage.
+    }
+
+    const applyTheme = (theme: 'light' | 'dark') => {
+      root.dataset.theme = theme;
+      button.setAttribute('aria-pressed', String(theme === 'dark'));
+    };
+
+    try {
+      const preference = window.matchMedia('(prefers-color-scheme: dark)');
+      if (!explicitChoice) applyTheme(preference.matches ? 'dark' : 'light');
+      preference.addEventListener('change', (event) => {
+        if (!explicitChoice) applyTheme(event.matches ? 'dark' : 'light');
+      });
+    } catch {
+      // Keep the initialized theme if system preference detection is unavailable.
+    }
+
+    button.addEventListener('click', () => {
+      const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      explicitChoice = true;
+      applyTheme(theme);
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch {
+        // A failed write must not undo the choice for this page.
+      }
+    });
+
+    applyTheme(root.dataset.theme === 'dark' ? 'dark' : 'light');
+    button.dataset.ready = '';
+  }
+</script>
+
+<style>
+  .theme-toggle {
+    visibility: hidden;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.5rem;
+    block-size: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-small);
+    background: none;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .theme-toggle[data-ready] {
+    visibility: visible;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-primary);
+  }
+
+  svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .moon,
+  [aria-pressed='true'] .sun {
+    display: none;
+  }
+
+  [aria-pressed='true'] .moon {
+    display: block;
+  }
+
+  @media (min-width: 48rem) {
+    .theme-toggle {
+      inline-size: 2rem;
+    }
+  }
+</style>
