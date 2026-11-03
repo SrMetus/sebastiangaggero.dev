@@ -1,5 +1,6 @@
 ---
 import LanguageSelector from './LanguageSelector.astro';
+import ThemeToggle from './ThemeToggle.astro';
 import { routes, cvPaths, type Locale, type Page } from '../i18n/routes';
 import { ui } from '../i18n/ui';
 
@@ -18,6 +19,18 @@ const home = routes.home[locale];
     <a class="brand" href={home}>
       Sebastian Gaggero
     </a>
+    <div class="header-utilities">
+      <a class="cv-link" href={cvPaths[locale]} download aria-label={content.downloadCV}>
+        <span class="cv-label-short" aria-hidden="true">
+          CV
+        </span>
+        <span class="cv-label-full" aria-hidden="true">
+          {content.downloadCV}
+        </span>
+      </a>
+      <LanguageSelector locale={locale} page={page} />
+      <ThemeToggle locale={locale} />
+    </div>
     <nav aria-label={content.primaryLabel}>
       <ul role="list">
         <li>
@@ -34,17 +47,6 @@ const home = routes.home[locale];
         </li>
       </ul>
     </nav>
-    <div class="header-utilities">
-      <a class="cv-link" href={cvPaths[locale]} download aria-label={content.downloadCV}>
-        <span class="cv-label-short" aria-hidden="true">
-          CV
-        </span>
-        <span class="cv-label-full" aria-hidden="true">
-          {content.downloadCV}
-        </span>
-      </a>
-      <LanguageSelector locale={locale} page={page} />
-    </div>
   </div>
 </header>
 
@@ -57,9 +59,10 @@ const home = routes.home[locale];
 
   .header-inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
-    column-gap: var(--space-2);
+    column-gap: var(--space-1);
+    row-gap: var(--space-1);
     padding-block: var(--space-3);
   }
 
@@ -80,24 +83,32 @@ const home = routes.home[locale];
 
   nav {
     grid-column: 1 / -1;
-    grid-row: 2;
+    grid-row: 3;
     max-inline-size: 100%;
   }
 
   .header-utilities {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: 2;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-2);
+  }
+
+  .header-utilities :global(.language-selector a) {
+    min-inline-size: 2.75rem;
+  }
+
+  .header-utilities :global(.theme-toggle) {
+    inline-size: 2.75rem;
   }
 
   .cv-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-inline-size: 1.5rem;
+    min-inline-size: 2.75rem;
     min-block-size: 2.75rem;
     color: var(--color-text);
     font-size: var(--font-size-small);
@@ -116,8 +127,8 @@ const home = routes.home[locale];
   }
 
   ul {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-1) var(--space-4);
     margin: 0;
     padding: 0;
@@ -126,6 +137,7 @@ const home = routes.home[locale];
 
   nav a {
     display: inline-flex;
+    inline-size: 100%;
     align-items: center;
     min-block-size: 2.75rem;
     color: var(--color-text);
@@ -143,6 +155,42 @@ const home = routes.home[locale];
     column-gap: var(--space-3);
   }
 
+  /* The brand and utilities share a row only once there is room for both. */
+  @media (min-width: 320px) {
+    .header-inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: 0;
+    }
+
+    .header-utilities {
+      grid-column: 2;
+      grid-row: 1;
+      gap: 0;
+    }
+
+    .cv-link,
+    .header-utilities :global(.language-selector a) {
+      min-inline-size: 1.5rem;
+    }
+
+    .header-utilities :global(.theme-toggle) {
+      inline-size: 1.5rem;
+    }
+
+    nav {
+      grid-row: 2;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      inline-size: auto;
+    }
+  }
+
   @media (min-width: 48rem) {
     .cv-label-short {
       display: none;
@@ -154,6 +202,14 @@ const home = routes.home[locale];
 
     .header-utilities {
       gap: var(--space-3);
+    }
+
+    .header-utilities :global(.language-selector a) {
+      min-inline-size: 2.75rem;
+    }
+
+    .header-utilities :global(.theme-toggle) {
+      inline-size: 2rem;
     }
 
     .header-inner {
@@ -184,6 +240,34 @@ const home = routes.home[locale];
 
     .header-utilities {
       grid-column: 3;
+    }
+  }
+
+  /* Explicit placement keeps the ultra-narrow structure independent of auto-placement. */
+  @media (max-width: 319px) {
+    .header-inner {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0;
+    }
+
+    .header-inner > .brand {
+      grid-area: 1 / 1 / 2 / -1;
+    }
+
+    .header-inner > .header-utilities {
+      grid-area: 2 / 1 / 3 / -1;
+      flex-wrap: nowrap;
+    }
+
+    .header-inner > nav {
+      grid-area: 3 / 1 / 4 / -1;
+    }
+
+    .header-inner > nav > ul {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      justify-content: start;
+      gap: 0 var(--space-3);
     }
   }
 </style>

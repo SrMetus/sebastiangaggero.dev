@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --color-background: #f5f1e8;
   --color-surface: #fbf9f4;
   --color-surface-alt: #e9eee7;
@@ -8,6 +9,8 @@
   --color-text: #202521;
   --color-text-muted: #68716b;
   --color-border: #d8ddd5;
+  --color-on-primary: #fbf9f4;
+  --color-focus: #214e3b;
 
   --font-family-body:
     'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -48,6 +51,39 @@
   --duration-fast: 150ms;
   --duration-normal: 200ms;
   --duration-slow: 250ms;
+}
+
+/* Keep explicit dark and the no-JavaScript OS fallback palettes identical. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-background: #1c2520;
+  --color-surface: #242e27;
+  --color-surface-alt: #2d3930;
+  --color-primary: #a0bda5;
+  --color-primary-hover: #b5cdb8;
+  --color-accent: #849f89;
+  --color-text: #ede9df;
+  --color-text-muted: #abb5aa;
+  --color-border: #536256;
+  --color-on-primary: #1c2520;
+  --color-focus: #b5cdb8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --color-background: #1c2520;
+    --color-surface: #242e27;
+    --color-surface-alt: #2d3930;
+    --color-primary: #a0bda5;
+    --color-primary-hover: #b5cdb8;
+    --color-accent: #849f89;
+    --color-text: #ede9df;
+    --color-text-muted: #abb5aa;
+    --color-border: #536256;
+    --color-on-primary: #1c2520;
+    --color-focus: #b5cdb8;
+  }
 }
 
 @media (min-width: 48rem) {
