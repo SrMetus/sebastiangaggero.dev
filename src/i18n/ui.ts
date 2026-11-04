@@ -1,6 +1,7 @@
 import type { Locale } from './routes';
 
 interface UIContent {
+  skipToMain: string;
   primaryLabel: string;
   work: string;
   services: string;
@@ -13,6 +14,7 @@ interface UIContent {
 
 export const ui = {
   en: {
+    skipToMain: 'Skip to main content',
     primaryLabel: 'Primary',
     work: 'Work',
     services: 'Services',
@@ -23,6 +25,7 @@ export const ui = {
     darkMode: 'Dark mode',
   },
   es: {
+    skipToMain: 'Saltar al contenido principal',
     primaryLabel: 'Principal',
     work: 'Proyectos',
     services: 'Servicios',

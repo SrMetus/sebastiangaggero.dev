@@ -9,6 +9,10 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !/^\/cv\/(en|es)\/?$/.test(new URL(page).pathname),
+      serialize: (item) => ({
+        ...item,
+        url: item.url.replace(/(\/projects\/job-radar)\/$/, '$1'),
+      }),
     }),
   ],
 });

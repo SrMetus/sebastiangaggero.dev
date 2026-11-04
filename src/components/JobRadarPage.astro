@@ -13,7 +13,7 @@ const content = jobRadar[locale];
 ---
 
 <BaseLayout metadata={metadata.jobRadar[locale]} locale={locale} page="jobRadar">
-  <main>
+  <main id="main-content" tabindex="-1">
     <article class="case-study" aria-labelledby="case-study-title">
       <header class="container-reading introduction">
         <a class="back-link" href={`${routes.home[locale]}#work`}>

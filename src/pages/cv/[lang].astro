@@ -1,4 +1,6 @@
 ---
+import { routes } from '../../i18n/routes';
+
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'es' } }];
 }
@@ -64,6 +66,8 @@ const content = {
 
 const lang = Astro.params.lang === 'es' ? 'es' : 'en';
 const copy = content[lang];
+const homeUrl = new URL(routes.home[lang], Astro.site).href;
+const caseStudyUrl = new URL(routes.jobRadar[lang], Astro.site).href;
 ---
 
 <!doctype html>
@@ -85,7 +89,7 @@ const copy = content[lang];
         <p class="contact">
           <a href="mailto:s.gaggero87@gmail.com">s.gaggero87@gmail.com</a>
           <span aria-hidden="true"> · </span>
-          <a href="https://sebastiangaggero.dev">sebastiangaggero.dev</a>
+          <a href={homeUrl}>sebastiangaggero.dev</a>
           <span aria-hidden="true"> · </span>
           <a href="https://github.com/SrMetus">GitHub</a>
           <span aria-hidden="true"> · </span>
@@ -109,7 +113,7 @@ const copy = content[lang];
             ))}
           </ul>
           <p class="project-links">
-            <a href="https://sebastiangaggero.dev/projects/job-radar">{copy.caseStudyLabel}</a>
+            <a href={caseStudyUrl}>{copy.caseStudyLabel}</a>
             <span aria-hidden="true"> · </span>
             <a href="https://job-radar-bonw.onrender.com/">{copy.liveLabel}</a>
           </p>

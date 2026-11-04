@@ -21,7 +21,7 @@ const content = home[locale];
 ---
 
 <BaseLayout metadata={metadata.home[locale]} locale={locale} page="home">
-  <main class="container">
+  <main id="main-content" class="container" tabindex="-1">
     <Hero content={content.hero} />
     <FeaturedJobRadar content={content.featuredJobRadar} caseStudyHref={routes.jobRadar[locale]} />
     <SelectedWork content={content.selectedWork} />
