@@ -43,17 +43,17 @@ The project intentionally avoids unnecessary frontend frameworks and dependencie
 
 ### Portfolio
 
-| Language | Homepage | Job Radar case study |
-| --- | --- | --- |
-| English | `/` | `/projects/job-radar` |
-| Español | `/es/` | `/es/projects/job-radar` |
+| Language | Homepage | Job Radar case study     |
+| -------- | -------- | ------------------------ |
+| English  | `/`      | `/projects/job-radar`    |
+| Español  | `/es/`   | `/es/projects/job-radar` |
 
 ### CV
 
-| Language | HTML source | PDF |
-| --- | --- | --- |
-| English | `/cv/en/` | `/sebastian-gaggero-cv-en.pdf` |
-| Español | `/cv/es/` | `/sebastian-gaggero-cv-es.pdf` |
+| Language | HTML source | PDF                            |
+| -------- | ----------- | ------------------------------ |
+| English  | `/cv/en/`   | `/sebastian-gaggero-cv-en.pdf` |
+| Español  | `/cv/es/`   | `/sebastian-gaggero-cv-es.pdf` |
 
 The HTML CV routes are print-oriented sources and are excluded from normal search indexing.
 
@@ -232,7 +232,7 @@ Implemented features include:
 The HTML CV routes are excluded from the sitemap and contain:
 
 ```html
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex" />
 ```
 
 The PDF CV files remain available as downloadable public assets.
@@ -636,4 +636,4 @@ LinkedIn:
 https://www.linkedin.com/in/sebastiangaggero/
 
 Portfolio domain:  
-https://sebastiangaggero.dev *(planned production domain)*
+https://sebastiangaggero.dev _(planned production domain)_

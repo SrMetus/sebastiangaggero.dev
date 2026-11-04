@@ -92,6 +92,26 @@ a:hover {
   outline-offset: 3px;
 }
 
+.skip-link {
+  position: fixed;
+  inset-block-start: var(--space-4);
+  inset-inline-start: var(--page-gutter);
+  z-index: 1;
+  max-inline-size: calc(100% - 2 * var(--page-gutter));
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-background);
+  font-weight: var(--font-weight-semibold);
+}
+
+.skip-link:not(:focus) {
+  clip-path: inset(50%);
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .container,
 .container-reading {
   inline-size: calc(100% - 2 * var(--page-gutter));
