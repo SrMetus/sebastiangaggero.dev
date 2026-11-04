@@ -6,6 +6,16 @@ export interface PageMetadata {
   ogType: 'website' | 'article';
 }
 
+export const socialImage = {
+  path: '/social-preview.png',
+  width: 1200,
+  height: 630,
+  alt: {
+    en: 'Sebastian Gaggero, Python Backend Developer.',
+    es: 'Sebastian Gaggero, desarrollador backend Python.',
+  } satisfies Record<Locale, string>,
+};
+
 export const metadata = {
   home: {
     en: {
